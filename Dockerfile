@@ -36,11 +36,11 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/prisma ./prisma
-COPY server.js ./
+COPY server.cjs ./
 
 EXPOSE 80
 
 ENV PORT=80
 
 # Start the Express server (schema synchronization is handled asynchronously by the server on startup)
-CMD ["node", "server.js"]
+CMD ["node", "server.cjs"]
