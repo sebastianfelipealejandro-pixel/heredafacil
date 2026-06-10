@@ -9,9 +9,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Postgres pool configuration
-const connectionString = process.env.DATABASE_URL || 'postgres://nicolas:cabrera@web_db-heredafacil:5432/heredafacil?sslmode=disable';
+const connectionString = process.env.DATABASE_URL || 'postgres://nicolas:cabrera@db-heredafacil:5432/heredafacil?sslmode=disable';
 const pool = new Pool({
   connectionString: connectionString
+});
+
+// Handle pool errors to prevent process crash
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client in database pool:', err.message);
 });
 
 // Test connection and initialize table
