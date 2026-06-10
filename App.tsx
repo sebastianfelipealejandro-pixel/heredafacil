@@ -180,13 +180,17 @@ const App: React.FC = () => {
                     Agenda tu Consulta
                  </motion.a>
                  <a 
-                    href="tel:+56937608201" 
-                    onClick={() => trackConversion("tel:+56937608201")}
+                    href="https://wa.me/56937608201?text=Vengo%20de%20la%20pagina%20web%20me%20encataria%20cotizar%20los%20servicios%20legales" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackConversion("https://wa.me/56937608201")}
                     className="px-8 py-4 flex items-center justify-center gap-3 border border-brand-900 text-brand-900 font-bold rounded-sm hover:bg-brand-900 hover:text-white transition-all group"
                  >
-                    <Phone size={18} />
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" className="transition-transform duration-300 group-hover:scale-110">
+                      <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.37 5.054L2 22l5.075-1.33a9.965 9.965 0 0 0 4.93 1.314h.005c5.507 0 9.99-4.479 9.99-9.988 0-2.67-1.037-5.18-2.92-7.062C17.2 3.053 14.686 2 12.012 2zm6.7 14.17c-.228.64-.81 1.2-1.417 1.5-1.025.509-2.337.07-3.984-.59-2.73-1.09-4.515-3.86-4.65-4.045-.136-.18-1.11-1.48-1.11-2.813 0-1.338.702-1.995.95-2.25.228-.23.51-.305.68-.305.17 0 .34.005.488.01.15.01.35-.06.55.42.203.49.697 1.7.757 1.83.06.12.1.27.01.45-.08.18-.13.28-.27.43-.13.15-.28.34-.4.48-.12.14-.25.3-.1.56.15.26.66 1.09 1.41 1.76.97.86 1.79 1.13 2.05 1.26.26.13.41.11.56-.05.15-.17.65-.75.82-.99.17-.25.35-.2.58-.12.24.08 1.52.72 1.78.85.27.13.44.2.51.32.07.12.07.7-.16 1.34z"/>
+                    </svg>
                     <div className="flex flex-col items-start leading-none">
-                      <span className="text-[10px] uppercase font-normal opacity-70">Llámanos ahora</span>
+                      <span className="text-[10px] uppercase font-normal opacity-70">Escríbenos por WhatsApp</span>
                       <span>+56 9 3760 8201</span>
                     </div>
                  </a>
