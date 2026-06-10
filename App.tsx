@@ -39,23 +39,200 @@ const HFLogo: React.FC<{ colorH?: string; colorF?: string; className?: string }>
   </svg>
 );
 
+const ContactPage: React.FC<{ handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void; formStatus: string }> = ({ handleFormSubmit, formStatus }) => {
+  return (
+    <div className="pt-32 pb-20 md:pt-40 md:pb-32 bg-brand-tan min-h-[80vh] flex items-center">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="animate-fade-in-up">
+            <div className="inline-block px-3 py-1 border border-brand-gold/30 rounded-full text-xs font-bold text-brand-gold mb-6 uppercase tracking-wider">
+              Asesoría Legal de Excelencia
+            </div>
+            <h1 className="font-serif text-5xl md:text-6xl mb-6 text-brand-900 leading-tight">
+              Hablemos de <br/><span className="text-brand-gold italic font-serif">tu caso</span>
+            </h1>
+            <p className="text-brand-800 text-lg mb-8 leading-relaxed max-w-lg">
+              Somos un equipo de abogados de la <strong>Pontificia Universidad Católica de Valparaíso</strong>, especializados en posesiones efectivas y herencias en todo Chile.
+            </p>
+            <p className="text-brand-800 text-md mb-12 leading-relaxed max-w-lg opacity-90">
+              Completa el formulario a la derecha indicando tus datos y el servicio de tu interés. Un especialista analizará tu situación legal antes de llamarte para darte una orientación inicial gratuita.
+            </p>
+
+            <div className="space-y-6">
+              <a 
+                href="https://wa.me/56937608201?text=Vengo%20de%20la%20pagina%20web%20me%20encataria%20cotizar%20los%20servicios%20legales" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 group hover:bg-white/40 p-4 rounded-lg transition-colors border border-transparent hover:border-brand-tan-dark"
+              >
+                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-md">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.37 5.054L2 22l5.075-1.33a9.965 9.965 0 0 0 4.93 1.314h.005c5.507 0 9.99-4.479 9.99-9.988 0-2.67-1.037-5.18-2.92-7.062C17.2 3.053 14.686 2 12.012 2zm6.7 14.17c-.228.64-.81 1.2-1.417 1.5-1.025.509-2.337.07-3.984-.59-2.73-1.09-4.515-3.86-4.65-4.045-.136-.18-1.11-1.48-1.11-2.813 0-1.338.702-1.995.95-2.25.228-.23.51-.305.68-.305.17 0 .34.005.488.01.15.01.35-.06.55.42.203.49.697 1.7.757 1.83.06.12.1.27.01.45-.08.18-.13.28-.27.43-.13.15-.28.34-.4.48-.12.14-.25.3-.1.56.15.26.66 1.09 1.41 1.76.97.86 1.79 1.13 2.05 1.26.26.13.41.11.56-.05.15-.17.65-.75.82-.99.17-.25.35-.2.58-.12.24.08 1.52.72 1.78.85.27.13.44.2.51.32.07.12.07.7-.16 1.34z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-brand-900">Escríbenos por WhatsApp</h4>
+                  <p className="text-brand-gold text-lg group-hover:underline font-semibold">+56 9 3760 8201</p>
+                </div>
+              </a>
+
+              <a 
+                href="mailto:heredafacil@gmail.com" 
+                className="flex items-center gap-4 group hover:bg-white/40 p-4 rounded-lg transition-colors border border-transparent hover:border-brand-tan-dark"
+              >
+                <div className="w-12 h-12 bg-brand-900 rounded-full flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-md">
+                  <Mail size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-brand-900">Correo Electrónico</h4>
+                  <p className="text-brand-gold text-lg group-hover:underline font-semibold">heredafacil@gmail.com</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-8 md:p-10 text-brand-900 shadow-2xl w-full border border-brand-tan-dark/50 animate-fade-in-up">
+            <h3 className="font-serif text-3xl font-bold mb-2">Formulario de Contacto</h3>
+            <p className="text-sm text-brand-500 mb-8">Completa los datos a continuación y agenda tu asesoría.</p>
+            
+            <form id="form-contacto" className="space-y-6" onSubmit={handleFormSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Nombre</label>
+                  <input type="text" name="name" required placeholder="Tu nombre completo" className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Teléfono</label>
+                  <input type="tel" name="phone" required placeholder="+56 9..." className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Correo Electrónico</label>
+                <input type="email" name="email" required placeholder="nombre@correo.com" className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Servicio</label>
+                <select name="service" className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all appearance-none">
+                  <option value="Posesión Efectiva">Posesión Efectiva</option>
+                  <option value="Testamento">Testamento</option>
+                  <option value="Juicio de Partición">Juicio de Partición</option>
+                  <option value="Asesoría General">Asesoría General</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Mensaje</label>
+                <textarea name="message" rows={3} placeholder="Breve descripción de tu caso (opcional)..." className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"></textarea>
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={formStatus === 'sending' || formStatus === 'success'}
+                className={`w-full font-bold py-4 rounded-md shadow-md transition-all flex items-center justify-center gap-2 ${
+                  formStatus === 'success' 
+                    ? 'bg-green-600 text-white hover:bg-green-700' 
+                    : formStatus === 'error'
+                    ? 'bg-red-600 text-white hover:bg-red-700'
+                    : 'bg-brand-gold text-white hover:bg-brand-gold/90'
+                }`}
+              >
+                {formStatus === 'sending' ? (
+                  <>Enviando... <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div></>
+                ) : formStatus === 'success' ? (
+                  <>¡Mensaje Enviado! <CheckCircle size={18} /></>
+                ) : formStatus === 'error' ? (
+                  <>Error al enviar <AlertCircle size={18} /></>
+                ) : (
+                  <>Enviar consulta ahora <Send size={18} /></>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ThankYouPage: React.FC<{ navigate: (to: string) => void }> = ({ navigate }) => {
+  return (
+    <div className="pt-32 pb-20 md:pt-40 md:pb-32 bg-brand-tan min-h-[85vh] flex items-center">
+      <div className="container mx-auto px-6 text-center max-w-2xl animate-fade-in-up">
+        <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+          <CheckCircle size={48} />
+        </div>
+        <h1 className="font-serif text-4xl md:text-5xl mb-6 text-brand-900 leading-tight">
+          ¡Muchas gracias <br/>por <span className="text-brand-gold italic font-serif">tu consulta</span>!
+        </h1>
+        <p className="text-brand-800 text-lg mb-8 leading-relaxed">
+          Hemos recibido tus datos con éxito en nuestro sistema de atención. Un abogado titulado de la <strong>Pontificia Universidad Católica de Valparaíso</strong> revisará los antecedentes preliminares de tu caso.
+        </p>
+        <p className="text-brand-800 text-md mb-12 leading-relaxed opacity-95">
+          Te contactaremos en un plazo máximo de <strong>24 horas hábiles</strong> (vía telefónica o WhatsApp) para brindarte tu orientación legal inicial gratuita.
+        </p>
+        <button 
+          onClick={() => navigate('/')} 
+          className="px-8 py-4 bg-brand-900 text-white font-bold rounded-sm shadow-md hover:bg-brand-800 transition-colors inline-block"
+        >
+          Volver a la Página Principal
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [path, setPath] = useState(window.location.pathname);
 
-  const scrollToSection = (id: string) => (e: React.MouseEvent) => {
+  useEffect(() => {
+    const handlePopState = () => {
+      setPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigate = (to: string) => {
+    window.history.pushState({}, '', to);
+    setPath(to);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleNavClick = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     setMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const headerOffset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+      setPath('/');
+      
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const headerOffset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 150);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
     }
   };
 
@@ -90,6 +267,7 @@ const App: React.FC = () => {
         setFormStatus('success');
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setFormStatus('idle'), 5000);
+        navigate('/gracias');
       } else {
         console.error("API submission error:", data);
         setFormStatus('error');
@@ -106,7 +284,7 @@ const App: React.FC = () => {
       {/* Navigation - White Background */}
       <nav className="fixed top-0 left-0 right-0 z-50 py-4 bg-white shadow-md transition-all duration-300">
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
             <HFLogo />
             <div className="font-serif text-3xl tracking-tight flex items-center">
               <span className="font-bold text-brand-900">Hereda</span>
@@ -115,17 +293,17 @@ const App: React.FC = () => {
           </div>
           
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium tracking-wide text-brand-900">
-            <a href="#inicio" onClick={scrollToSection('inicio')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Inicio</a>
-            <a href="#nosotros" onClick={scrollToSection('nosotros')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Nosotros</a>
-            <a href="#servicios" onClick={scrollToSection('servicios')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Servicios</a>
-            <a href="#como-funciona" onClick={scrollToSection('como-funciona')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Cómo funciona</a>
-            <a href="#testimonios" onClick={scrollToSection('testimonios')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Testimonios</a>
-            <a href="#preguntas" onClick={scrollToSection('preguntas')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Preguntas</a>
+            <a href="#inicio" onClick={handleNavClick('inicio')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Inicio</a>
+            <a href="#nosotros" onClick={handleNavClick('nosotros')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Nosotros</a>
+            <a href="#servicios" onClick={handleNavClick('servicios')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Servicios</a>
+            <a href="#como-funciona" onClick={handleNavClick('como-funciona')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Cómo funciona</a>
+            <a href="#testimonios" onClick={handleNavClick('testimonios')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Testimonios</a>
+            <a href="#preguntas" onClick={handleNavClick('preguntas')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Preguntas</a>
             <a href="https://blog.heredafacil.cl/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Blog</a>
-            <a href="#contacto" onClick={scrollToSection('contacto')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Contacto</a>
+            <a href="/contacto" onClick={(e) => { e.preventDefault(); navigate('/contacto'); }} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Contacto</a>
             <a 
-              href="#contacto"
-              onClick={scrollToSection('contacto')}
+              href="/contacto"
+              onClick={(e) => { e.preventDefault(); navigate('/contacto'); }}
               className="px-6 py-3 bg-brand-900 text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-800 transition-colors shadow-sm rounded-sm"
             >
               Agenda tu Consulta
@@ -141,15 +319,15 @@ const App: React.FC = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-white flex flex-col items-center justify-center gap-8 text-xl font-serif animate-fade-in text-brand-900">
-            <a href="#inicio" onClick={scrollToSection('inicio')} className="hover:text-brand-gold">Inicio</a>
-            <a href="#nosotros" onClick={scrollToSection('nosotros')} className="hover:text-brand-gold">Nosotros</a>
-            <a href="#servicios" onClick={scrollToSection('servicios')} className="hover:text-brand-gold">Servicios</a>
-            <a href="#como-funciona" onClick={scrollToSection('como-funciona')} className="hover:text-brand-gold">Cómo funciona</a>
+            <a href="#inicio" onClick={handleNavClick('inicio')} className="hover:text-brand-gold">Inicio</a>
+            <a href="#nosotros" onClick={handleNavClick('nosotros')} className="hover:text-brand-gold">Nosotros</a>
+            <a href="#servicios" onClick={handleNavClick('servicios')} className="hover:text-brand-gold">Servicios</a>
+            <a href="#como-funciona" onClick={handleNavClick('como-funciona')} className="hover:text-brand-gold">Cómo funciona</a>
             <a href="https://blog.heredafacil.cl/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold">Blog</a>
-            <a href="#contacto" onClick={scrollToSection('contacto')} className="hover:text-brand-gold">Contacto</a>
+            <a href="/contacto" onClick={(e) => { e.preventDefault(); setMenuOpen(false); navigate('/contacto'); }} className="hover:text-brand-gold">Contacto</a>
             <a 
-              href="#contacto" 
-              onClick={scrollToSection('contacto')}
+              href="/contacto" 
+              onClick={(e) => { e.preventDefault(); setMenuOpen(false); navigate('/contacto'); }}
               className="px-8 py-3 bg-brand-900 text-white rounded-sm"
             >
               Agenda tu Consulta
@@ -157,8 +335,14 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Hero Section */}
-      <header id="inicio" className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+      {path === '/contacto' ? (
+        <ContactPage handleFormSubmit={handleFormSubmit} formStatus={formStatus} />
+      ) : path === '/gracias' ? (
+        <ThankYouPage navigate={navigate} />
+      ) : (
+        <>
+          {/* Hero Section */}
+          <header id="inicio" className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1 animate-fade-in-up">
@@ -176,8 +360,8 @@ const App: React.FC = () => {
               
               <div className="flex flex-col sm:flex-row gap-4">
                  <motion.a 
-                    href="#contacto"
-                    onClick={scrollToSection('contacto')}
+                    href="/contacto"
+                    onClick={(e) => { e.preventDefault(); navigate('/contacto'); }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     animate={{ scale: [1, 1.02, 1] }}
@@ -353,7 +537,7 @@ const App: React.FC = () => {
                 <div className="mt-16 text-center">
                     <p className="text-brand-800 mb-6">¿No encuentras lo que buscas? Contáctanos para un análisis personalizado.</p>
                     <button 
-                      onClick={scrollToSection('contacto')} 
+                      onClick={() => navigate('/contacto')} 
                       className="px-8 py-3 bg-brand-900 text-white font-bold rounded-full shadow-lg hover:bg-brand-800 active:opacity-50 active:blur-[1px] transition-all"
                     >
                         Hablar con un Abogado
@@ -396,7 +580,7 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="mt-20 text-center uppercase tracking-widest text-sm font-bold">
-                     <a href="#contacto" onClick={scrollToSection('contacto')} className="inline-flex items-center text-brand-gold hover:text-white transition-colors cursor-pointer group">
+                     <a href="#contacto" onClick={(e) => { e.preventDefault(); navigate('/contacto'); }} className="inline-flex items-center text-brand-gold hover:text-white transition-colors cursor-pointer group">
                         Comienza tu trámite hoy <ArrowRight className="ml-3 transition-transform group-hover:translate-x-2" size={18} />
                      </a>
                 </div>
@@ -568,6 +752,8 @@ const App: React.FC = () => {
         </section>
 
       </main>
+        </>
+      )}
 
       <footer className="bg-brand-900 text-brand-tan-dark py-16 border-t border-brand-800">
         <div className="container mx-auto px-6">
