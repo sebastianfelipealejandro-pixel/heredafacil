@@ -40,6 +40,19 @@ const HFLogo: React.FC<{ colorH?: string; colorF?: string; className?: string }>
 );
 
 const ContactPage: React.FC<{ handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void; formStatus: string }> = ({ handleFormSubmit, formStatus }) => {
+  useEffect(() => {
+    // Dynamic fallback to load HubSpot script
+    if (typeof window !== 'undefined' && !document.getElementById('hs-script-loader')) {
+      const script = document.createElement('script');
+      script.id = 'hs-script-loader';
+      script.type = 'text/javascript';
+      script.async = true;
+      script.defer = true;
+      script.src = '//js.hs-scripts.com/51574660.js';
+      document.head.appendChild(script);
+    }
+  }, []);
+
   return (
     <div className="pt-32 pb-20 md:pt-40 md:pb-32 bg-brand-tan min-h-[80vh] flex items-center">
       <div className="container mx-auto px-6">
@@ -157,6 +170,19 @@ const ContactPage: React.FC<{ handleFormSubmit: (e: React.FormEvent<HTMLFormElem
 };
 
 const ThankYouPage: React.FC<{ navigate: (to: string) => void }> = ({ navigate }) => {
+  useEffect(() => {
+    // Dynamic fallback to load HubSpot script
+    if (typeof window !== 'undefined' && !document.getElementById('hs-script-loader')) {
+      const script = document.createElement('script');
+      script.id = 'hs-script-loader';
+      script.type = 'text/javascript';
+      script.async = true;
+      script.defer = true;
+      script.src = '//js.hs-scripts.com/51574660.js';
+      document.head.appendChild(script);
+    }
+  }, []);
+
   return (
     <div className="pt-32 pb-20 md:pt-40 md:pb-32 bg-brand-tan min-h-[85vh] flex items-center">
       <div className="container mx-auto px-6 text-center max-w-2xl animate-fade-in-up">
@@ -196,19 +222,21 @@ const App: React.FC = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Track page view in HubSpot whenever the path changes
+  useEffect(() => {
+    try {
+      const _hsq = (window as any)._hsq = (window as any)._hsq || [];
+      _hsq.push(['setPath', path]);
+      _hsq.push(['trackPageView']);
+    } catch (err) {
+      console.warn("HubSpot tracking error on path change:", err);
+    }
+  }, [path]);
+
   const navigate = (to: string) => {
     window.history.pushState({}, '', to);
     setPath(to);
     window.scrollTo({ top: 0, behavior: 'instant' });
-
-    // Track SPA page view in HubSpot
-    try {
-      const _hsq = (window as any)._hsq = (window as any)._hsq || [];
-      _hsq.push(['setPath', to]);
-      _hsq.push(['trackPageView']);
-    } catch (err) {
-      console.warn("HubSpot tracking error:", err);
-    }
   };
 
   const handleNavClick = (id: string) => (e: React.MouseEvent) => {
@@ -272,6 +300,18 @@ const App: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
+        // Push user identity to HubSpot upon successful form submission
+        try {
+          const _hsq = (window as any)._hsq = (window as any)._hsq || [];
+          _hsq.push(['identify', {
+            email: payload.email,
+            firstname: payload.name,
+            phone: payload.phone
+          }]);
+        } catch (err) {
+          console.warn("HubSpot identity tracking error:", err);
+        }
+
         setFormStatus('success');
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setFormStatus('idle'), 5000);
