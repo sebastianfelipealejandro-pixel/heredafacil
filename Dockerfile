@@ -15,15 +15,23 @@ COPY . .
 # Build the project (Vite outputs to /app/dist)
 RUN npm run build
 
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
+# Stage 2: Serve with Express
+FROM node:20-alpine
 
-# Copy build files from stage 1 to Nginx default public directory
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Copy custom Nginx configuration for single-page app routing
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy package files
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm ci --omit=dev
+
+# Copy build files from stage 1 and server.js
+COPY --from=build /app/dist ./dist
+COPY server.js ./
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+ENV PORT=80
+
+CMD ["node", "server.js"]

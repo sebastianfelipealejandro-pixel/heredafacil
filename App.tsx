@@ -67,14 +67,21 @@ const App: React.FC = () => {
     trackConversion();
 
     const formData = new FormData(e.currentTarget);
-    formData.append("access_key", "e58eeb85-776c-4d99-865f-3fed00f770f5");
-    formData.append("subject", "Nueva consulta desde Hereda Fácil Web");
-    formData.append("from_name", "Hereda Fácil Contacto");
+    const payload = {
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      email: formData.get("email"),
+      service: formData.get("service"),
+      message: formData.get("message")
+    };
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contacto", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
       });
 
       const data = await response.json();
@@ -84,7 +91,7 @@ const App: React.FC = () => {
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setFormStatus('idle'), 5000);
       } else {
-        console.error("Web3Forms Error:", data);
+        console.error("API submission error:", data);
         setFormStatus('error');
       }
     } catch (error) {
@@ -499,7 +506,7 @@ const App: React.FC = () => {
                         <h3 className="font-serif text-2xl font-bold mb-2">Agenda tu hora</h3>
                         <p className="text-sm text-brand-500 mb-8">Completa el formulario y te contactaremos a la brevedad.</p>
                         
-                        <form className="space-y-6" onSubmit={handleFormSubmit}>
+                        <form id="form-contacto" className="space-y-6" onSubmit={handleFormSubmit}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Nombre</label>
@@ -528,7 +535,7 @@ const App: React.FC = () => {
 
                             <div>
                                 <label className="block text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">Mensaje</label>
-                                <textarea name="message" required rows={3} placeholder="Breve descripción de tu caso..." className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"></textarea>
+                                <textarea name="message" rows={3} placeholder="Breve descripción de tu caso (opcional)..." className="w-full bg-brand-tan/30 border border-brand-tan-dark p-3 rounded-md focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"></textarea>
                             </div>
 
                             <button 
