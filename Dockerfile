@@ -1,6 +1,9 @@
 # Stage 1: Build
 FROM node:20-alpine AS build
 
+# Install OpenSSL and libc6-compat for Prisma compatibility on Alpine Linux
+RUN apk add --no-cache openssl libc6-compat
+
 WORKDIR /app
 
 # Copy package files
@@ -18,6 +21,9 @@ RUN npm run build
 
 # Stage 2: Serve with Express
 FROM node:20-alpine
+
+# Install OpenSSL and libc6-compat for Prisma compatibility on Alpine Linux
+RUN apk add --no-cache openssl libc6-compat
 
 WORKDIR /app
 
