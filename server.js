@@ -1,5 +1,6 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const { exec } = require('child_process');
 const path = require('path');
 
 const app = express();
@@ -40,6 +41,17 @@ app.post('/api/contacto', async (req, res) => {
 // Fallback to index.html for SPA routing
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+// Sync database schema in the background on startup
+console.log("Starting background database synchronization...");
+exec('npx prisma db push', (err, stdout, stderr) => {
+  if (err) {
+    console.error('Prisma schema synchronization (db push) failed on startup:', err.message);
+    console.error(stderr);
+  } else {
+    console.log('Prisma schema synchronization (db push) completed successfully:\n', stdout);
+  }
 });
 
 const PORT = process.env.PORT || 80;

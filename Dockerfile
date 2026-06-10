@@ -42,5 +42,5 @@ EXPOSE 80
 
 ENV PORT=80
 
-# Auto-apply database schema migrations and run Express server
-CMD ["sh", "-c", "npx prisma db push && node server.js"]
+# Start the Express server (schema synchronization is handled asynchronously by the server on startup)
+CMD ["node", "server.js"]
