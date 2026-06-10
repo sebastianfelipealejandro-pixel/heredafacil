@@ -19,6 +19,9 @@ COPY . .
 RUN npx prisma generate
 RUN npm run build
 
+# Remove development dependencies to keep the image light
+RUN npm prune --omit=dev
+
 # Stage 2: Serve with Express
 FROM node:20-alpine
 
@@ -27,19 +30,12 @@ RUN apk add --no-cache openssl libc6-compat
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-
-# Install production dependencies
-RUN npm ci --omit=dev
-
-# Copy build files, server.js, and prisma schema
+# Copy production assets and dependencies from stage 1
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/prisma ./prisma
 COPY server.js ./
-COPY prisma ./prisma
-
-# Generate Prisma Client inside the production container
-RUN npx prisma generate
 
 EXPOSE 80
 
