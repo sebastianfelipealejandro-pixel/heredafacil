@@ -200,6 +200,15 @@ const App: React.FC = () => {
     window.history.pushState({}, '', to);
     setPath(to);
     window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // Track SPA page view in HubSpot
+    try {
+      const _hsq = (window as any)._hsq = (window as any)._hsq || [];
+      _hsq.push(['setPath', to]);
+      _hsq.push(['trackPageView']);
+    } catch (err) {
+      console.warn("HubSpot tracking error:", err);
+    }
   };
 
   const handleNavClick = (id: string) => (e: React.MouseEvent) => {
@@ -207,8 +216,7 @@ const App: React.FC = () => {
     setMenuOpen(false);
     
     if (window.location.pathname !== '/') {
-      window.history.pushState({}, '', '/');
-      setPath('/');
+      navigate('/');
       
       setTimeout(() => {
         const element = document.getElementById(id);
