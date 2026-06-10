@@ -12,7 +12,8 @@ RUN npm ci
 # Copy the rest of the application code
 COPY . .
 
-# Build the project (Vite outputs to /app/dist)
+# Generate Prisma client and build Vite project
+RUN npx prisma generate
 RUN npm run build
 
 # Stage 2: Serve with Express
@@ -23,15 +24,20 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
+# Install production dependencies
 RUN npm ci --omit=dev
 
-# Copy build files from stage 1 and server.js
+# Copy build files, server.js, and prisma schema
 COPY --from=build /app/dist ./dist
 COPY server.js ./
+COPY prisma ./prisma
+
+# Generate Prisma Client inside the production container
+RUN npx prisma generate
 
 EXPOSE 80
 
 ENV PORT=80
 
-CMD ["node", "server.js"]
+# Auto-apply database schema migrations and run Express server
+CMD ["sh", "-c", "npx prisma db push && node server.js"]

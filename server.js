@@ -1,5 +1,5 @@
 const express = require('express');
-const { Pool } = require('pg');
+const { PrismaClient } = require('@prisma/client');
 const path = require('path');
 
 const app = express();
@@ -8,39 +8,7 @@ app.use(express.json());
 // Serve static files from Vite build
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Postgres pool configuration
-const connectionString = process.env.DATABASE_URL || 'postgres://nicolas:cabrera@db-heredafacil:5432/heredafacil?sslmode=disable';
-const pool = new Pool({
-  connectionString: connectionString
-});
-
-// Handle pool errors to prevent process crash
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client in database pool:', err.message);
-});
-
-// Test connection and initialize table
-async function initDb() {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS leads (
-        id SERIAL PRIMARY KEY,
-        nombre VARCHAR(255) NOT NULL,
-        telefono VARCHAR(50) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        servicio VARCHAR(100) NOT NULL,
-        mensaje TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
-    console.log("Database initialized successfully.");
-  } catch (err) {
-    console.error("Database connection/initialization failed. Make sure Postgres is running.");
-    console.error(err.message);
-  }
-}
-
-initDb();
+const prisma = new PrismaClient();
 
 // POST endpoint for contact submissions
 app.post('/api/contacto', async (req, res) => {
@@ -51,18 +19,20 @@ app.post('/api/contacto', async (req, res) => {
   }
 
   try {
-    const query = `
-      INSERT INTO leads (nombre, telefono, email, servicio, mensaje)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING *
-    `;
-    const values = [name, phone, email, service, message || null];
-    const result = await pool.query(query, values);
+    const lead = await prisma.lead.create({
+      data: {
+        nombre: name,
+        telefono: phone,
+        email: email,
+        servicio: service,
+        mensaje: message || null
+      }
+    });
     
-    console.log("Lead successfully inserted:", result.rows[0]);
-    res.status(201).json({ success: true, lead: result.rows[0] });
+    console.log("Lead successfully inserted with Prisma:", lead);
+    res.status(201).json({ success: true, lead });
   } catch (error) {
-    console.error("Error inserting lead into database:", error);
+    console.error("Prisma insert error:", error);
     res.status(500).json({ success: false, error: 'Error al registrar contacto en la base de datos' });
   }
 });
@@ -74,5 +44,5 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port " + PORT);
 });
