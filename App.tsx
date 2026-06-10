@@ -122,6 +122,7 @@ const App: React.FC = () => {
             <a href="#testimonios" onClick={scrollToSection('testimonios')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Testimonios</a>
             <a href="#preguntas" onClick={scrollToSection('preguntas')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Preguntas</a>
             <a href="https://blog.heredafacil.cl/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Blog</a>
+            <a href="#contacto" onClick={scrollToSection('contacto')} className="hover:text-brand-gold transition-colors uppercase text-xs font-bold tracking-widest">Contacto</a>
             <a 
               href="#contacto"
               onClick={scrollToSection('contacto')}
@@ -145,6 +146,7 @@ const App: React.FC = () => {
             <a href="#servicios" onClick={scrollToSection('servicios')} className="hover:text-brand-gold">Servicios</a>
             <a href="#como-funciona" onClick={scrollToSection('como-funciona')} className="hover:text-brand-gold">Cómo funciona</a>
             <a href="https://blog.heredafacil.cl/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold">Blog</a>
+            <a href="#contacto" onClick={scrollToSection('contacto')} className="hover:text-brand-gold">Contacto</a>
             <a 
               href="#contacto" 
               onClick={scrollToSection('contacto')}
